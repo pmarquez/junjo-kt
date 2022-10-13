@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 
 //   Third Party Libraries Imports
 import lombok.extern.slf4j.Slf4j
+import mu.KotlinLogging
 import org.springframework.dao.DataAccessException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.EmptyResultDataAccessException
@@ -55,10 +56,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @RestControllerAdvice
 class ControllerAdviceExceptionHandler : ResponseEntityExceptionHandler ( ) {
+
+    private val logger = KotlinLogging.logger { }
     @ExceptionHandler ( NoSuchElementException::class )
     fun handleNoSuchElementException ( ex: NoSuchElementException, request: WebRequest ): ResponseEntity<SingleErrorResponse> {
-//        ControllerAdviceExceptionHandler.log.debug("Request  : $request")
-//        ControllerAdviceExceptionHandler.log.debug("Exception: $ex")
+        logger.debug ( "Request  : $request" )
+        logger.debug ( "Exception: $ex" )
         val response = handleFourOhFours(request)
         return ResponseEntity(response, HttpStatus.NOT_FOUND)
     }
@@ -68,8 +71,8 @@ class ControllerAdviceExceptionHandler : ResponseEntityExceptionHandler ( ) {
         ex: EmptyResultDataAccessException,
         request: WebRequest
     ): ResponseEntity<SingleErrorResponse> {
-//        ControllerAdviceExceptionHandler.log.debug("Request  : $request")
-//        ControllerAdviceExceptionHandler.log.debug("Exception: $ex")
+        logger.debug("Request  : $request")
+        logger.debug("Exception: $ex")
         val response = handleFourOhFours(request)
         return ResponseEntity(response, HttpStatus.NOT_FOUND)
     }
@@ -86,8 +89,8 @@ class ControllerAdviceExceptionHandler : ResponseEntityExceptionHandler ( ) {
 
     @ExceptionHandler(Exception::class)
     fun handleExceptions(ex: Exception, request: WebRequest): ResponseEntity<SingleErrorResponse> {
-//        ControllerAdviceExceptionHandler.log.debug("Request  : $request")
-//        ControllerAdviceExceptionHandler.log.debug("Exception: $ex")
+        logger.debug("Request  : $request")
+        logger.debug("Exception: $ex")
         val response = SingleErrorResponse(
             LocalDateTime.now(),
             "Internal Server Error",
@@ -100,8 +103,8 @@ class ControllerAdviceExceptionHandler : ResponseEntityExceptionHandler ( ) {
 
     @ExceptionHandler(RuntimeException::class)
     fun handleRuntimeExceptions(ex: RuntimeException, request: WebRequest): ResponseEntity<SingleErrorResponse> {
-//        ControllerAdviceExceptionHandler.log.debug("Request  : $request")
-//        ControllerAdviceExceptionHandler.log.debug("Exception: $ex")
+        logger.debug("Request  : $request")
+        logger.debug("Exception: $ex")
         val response = SingleErrorResponse(
             LocalDateTime.now(),
             "Internal Server Error",
@@ -120,8 +123,8 @@ class ControllerAdviceExceptionHandler : ResponseEntityExceptionHandler ( ) {
      */
     @ExceptionHandler(DataAccessException::class, DataIntegrityViolationException::class)
     fun handleDatabaseErrors(ex: Exception, request: WebRequest): ResponseEntity<SingleErrorResponse> {
-//        ControllerAdviceExceptionHandler.log.debug("Request  : $request")
-//        ControllerAdviceExceptionHandler.log.debug("Exception: $ex")
+        logger.debug("Request  : $request")
+        logger.debug("Exception: $ex")
         val response = SingleErrorResponse(
             LocalDateTime.now(),
             "Internal Server Error",

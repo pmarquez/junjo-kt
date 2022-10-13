@@ -127,7 +127,7 @@ class SequenceRestController {
      * @return
      */
     @GetMapping ( path = ["/{sequenceId}/generate/{quantity}"] )
-    fun generateNextElementsInSequence ( @PathVariable("sequenceId") sequenceId: String?, @Valid @Min ( 1 ) @PathVariable ( "quantity" ) quantity: Int ): ResponseEntity<List<String?>> {
+    fun generateNextElementsInSequence ( @PathVariable("sequenceId") sequenceId: String?, @Min ( 1 ) @PathVariable ( "quantity" ) quantity: Int ): ResponseEntity<List<String?>?> {
 
         //   JACK SPARROW WAS HERE BIG TIME!!! @PathVariable validations NOT working. OPEN A TICKET WITH THIS ISSUE RIGHT AWAY
         if ( quantity < 0 ) { return ResponseEntity ( HttpStatus.BAD_REQUEST ) }
@@ -137,4 +137,5 @@ class SequenceRestController {
         return ResponseEntity ( generatedElements, HttpStatus.OK )
 
     }
+
 }

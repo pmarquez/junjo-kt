@@ -13,6 +13,7 @@ import info.pmarquezh.junjo.model.sequence.SequenceDTO
 import info.pmarquezh.junjo.model.sequence.SequenceRec
 import info.pmarquezh.junjo.repository.SequenceRepository
 import lombok.extern.slf4j.Slf4j
+import mu.KotlinLogging
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -52,6 +53,8 @@ import java.util.regex.Pattern
 @Service
 class SequenceServiceImpl @Autowired constructor ( private val sequenceRepository: SequenceRepository,
                                                    private val sequenceMapper: SequenceMapper ) : SequenceService {
+
+    private val logger = KotlinLogging.logger { }
 
     @Value("\${info.pmarquezh.junjo.numericPattern}")
     private val numericPatternString: String? = null
@@ -243,7 +246,7 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      */
     private fun processNumericGroup(numericGroup: String, increment: Boolean): String {
 
-//        SequenceServiceImpl.log.info("numericGroup: $numericGroup")
+        logger.info("numericGroup: $numericGroup")
 
         val maxDigitsAllowed = numericGroup.length - 2
         var nextNumber = if (increment) sequence!!.currentNumericSequence + 1 else sequence!!.currentNumericSequence
@@ -286,7 +289,7 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      * @return
      */
     private fun processAlphaGroup(alphaGroup: String, increment: Boolean): String {
-  //      SequenceServiceImpl.log.info("alphaGroup: $alphaGroup")
+        logger.info("alphaGroup: $alphaGroup")
 
         var currentAlphaSequence = 0
             currentAlphaSequence = if (sequence!!.priorityType == PRIORITY_NUMERIC) {
@@ -328,7 +331,7 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      */
     private fun processYearGroup(yearGroup: String): String {
 
-    //    SequenceServiceImpl.log.info("yearGroup: $yearGroup")
+        logger.info("yearGroup: $yearGroup")
 
         var yearRepresentation = LocalDate.now().year.toString()
 
@@ -348,7 +351,7 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      * @return
      */
     private fun getDigitsCount(num: Int): Int {
-        val numAsString = Integer.toString(num)
+        val numAsString = num.toString ( )
         return numAsString.length
     }
 
@@ -377,11 +380,12 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
         var validUuid = true
 
         try {
-            val uuid = UUID.fromString(theUuid)
-//            SequenceServiceImpl.log.info("well formed sequenceID")
-//            SequenceServiceImpl.log.info("Variant:" + uuid.variant())
-//            SequenceServiceImpl.log.info("Variant:" + uuid.version())
-        } catch (exception: IllegalArgumentException) {
+            val uuid = UUID.fromString ( theUuid )
+            logger.info ( "well formed sequenceID")
+            logger.info ( "Variant:" + uuid.variant ( ) )
+            logger.info ( "Variant:" + uuid.version ( ) )
+
+        } catch ( exception: IllegalArgumentException ) {
             validUuid = false
 
         }
