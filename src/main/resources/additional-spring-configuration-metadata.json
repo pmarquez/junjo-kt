@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "info.pmarquezh.junjo.numericPattern",
+      "type": "java.lang.String",
+      "description": "Describes, as a REGEX, the format of the numeric pattern to be substituted, if it exists, in the creation of a new element in a sequence. The goal is to detect strings wit formats similar to: '{NNN}', '{NNNNNN}', where the 'N' represents a digit in an arbitrary number of digits in the number to be generated. Examples: 1529, 000475, 0001."
+    },
+    {
+      "name": "info.pmarquezh.junjo.alphaPattern",
+      "type": "java.lang.String",
+      "description": "Describes, as a REGEX, the format of the alpha pattern to be substituted, if it exists, in the creation of a new element in a sequence. The goal is to detect strings wit formats similar to: '{AA}', '{AAAAA}', where the 'A' represents an alphabetic letter in the range 'A-Z' in an arbitrary number of characters for the string to be generated. Examples: AAA, AAB, AAC, ARDSGY."
+    }
+  ] }
