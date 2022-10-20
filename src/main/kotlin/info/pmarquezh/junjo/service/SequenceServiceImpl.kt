@@ -196,29 +196,9 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
 
         val elements: MutableList<String?> = ArrayList ( )
 
-        if (sequence!!.priorityType == PRIORITY_NUMERIC) {
-            for (i in 0 until quantity) {
-                template = sequence!!.pattern
-                template = retrieveNumericPattern() //   NUMERIC PATTERN
-                template = retrieveAlphaPattern() //   ALPHA PATTERN
-                template = retrieveYearPattern() //   YEAR PATTERN
-                elements.add(template)
-                numericRollover = false
-            }
-
-        } else {
-            for (i in 0 until quantity) {
-                template = sequence!!.pattern
-                template = retrieveAlphaPattern() //   ALPHA PATTERN
-                template = retrieveNumericPattern() //   NUMERIC PATTERN
-                template = retrieveYearPattern() //   YEAR PATTERN
-                elements.add ( template )
-                numericRollover = false
-            }
-
+        for (i in 0 until quantity) {
+            elements.add( this.getNextInSequence ( sequenceId ) )
         }
-
-        sequenceRepository.save ( sequence!! )
 
         return elements
 
@@ -366,9 +346,7 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
         ) + (CHAR_FOR_A + alphaSequence % NUM_CHARS_FROM_A_TO_Z).toChar()
     }
 
-    /**               */
-    /*****VALIDATIONS */
-    /**               */
+    /* VALIDATIONS */
 
     /**
      * Validates a UUID is correctly formed.

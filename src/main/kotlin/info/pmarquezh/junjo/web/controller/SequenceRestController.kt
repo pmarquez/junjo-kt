@@ -49,14 +49,15 @@ import info.pmarquezh.junjo.service.SequenceService
  * @version 1.0 - 2022-02-08 16:55
  */
 @RestController
-@RequestMapping("/junjoAPI/1.0/sequences")
+@RequestMapping ( "/junjoAPI/1.0/sequences" )
 class SequenceRestController {
 
     private val logger = KotlinLogging.logger { }
 
     private var sequenceService: SequenceService? = null
+
     @Autowired
-    fun setSequenceRestService(sequenceService: SequenceService?) {
+    fun setSequenceRestService ( sequenceService: SequenceService? ) {
         this.sequenceService = sequenceService
     }
 
@@ -64,22 +65,26 @@ class SequenceRestController {
      * Persists a new Sequence [C].
      * @return
      */
-    @PostMapping( path = [""])
-    fun persistSequence(@RequestBody sequenceDTO: @Valid SequenceDTO?): ResponseEntity<Void> {
-        val newSequenceId = sequenceService!!.persistSequence(sequenceDTO)
-        val headers = HttpHeaders()
-        headers.add("Location", newSequenceId)
-        return ResponseEntity(headers, HttpStatus.CREATED)
+    @PostMapping ( path = [""] )
+    fun persistSequence ( @Valid @RequestBody sequenceDTO: SequenceDTO ): ResponseEntity<Void> {
+
+        val newSequenceId = sequenceService!!.persistSequence ( sequenceDTO )
+
+        val headers = HttpHeaders ( )
+            headers.add ( "Location", newSequenceId )
+
+        return ResponseEntity ( headers, HttpStatus.CREATED )
+
     }
 
     /**
      * Retrieves all Sequences [R].
      * @return
      */
-    @GetMapping( path = [""])
-    fun retrieveSequences(): ResponseEntity<List<SequenceRec?>?> {
-        val sequences = sequenceService!!.retrieveSequences()
-        return ResponseEntity(sequences, HttpStatus.OK)
+    @GetMapping ( path = [""] )
+    fun retrieveSequences ( ): ResponseEntity<List<SequenceRec?>?> {
+        val sequences = sequenceService!!.retrieveSequences ( )
+        return ResponseEntity ( sequences, HttpStatus.OK )
     }
 
     /**
@@ -127,7 +132,8 @@ class SequenceRestController {
      * @return
      */
     @GetMapping ( path = ["/{sequenceId}/generate/{quantity}"] )
-    fun generateNextElementsInSequence ( @PathVariable("sequenceId") sequenceId: String?, @Min ( 1 ) @PathVariable ( "quantity" ) quantity: Int ): ResponseEntity<List<String?>?> {
+    fun generateNextElementsInSequence ( @PathVariable("sequenceId") sequenceId: String?, @PathVariable ( "quantity" ) quantity: Int ): ResponseEntity<List<String?>?> {
+//  fun generateNextElementsInSequence ( @PathVariable("sequenceId") sequenceId: String?, @Valid @Min ( 1 ) @PathVariable ( "quantity" ) quantity: Int ): ResponseEntity<List<String?>?> {
 
         //   JACK SPARROW WAS HERE BIG TIME!!! @PathVariable validations NOT working. OPEN A TICKET WITH THIS ISSUE RIGHT AWAY
         if ( quantity < 0 ) { return ResponseEntity ( HttpStatus.BAD_REQUEST ) }

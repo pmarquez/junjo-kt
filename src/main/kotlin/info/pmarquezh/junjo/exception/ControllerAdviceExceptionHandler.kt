@@ -5,7 +5,6 @@ package info.pmarquezh.junjo.exception
 import java.time.LocalDateTime
 
 //   Third Party Libraries Imports
-import lombok.extern.slf4j.Slf4j
 import mu.KotlinLogging
 import org.springframework.dao.DataAccessException
 import org.springframework.dao.DataIntegrityViolationException
@@ -53,7 +52,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * @author pmarquezh
  * @version 1.0 - 2022-06-04 12:50
  */
-@Slf4j
 @RestControllerAdvice
 class ControllerAdviceExceptionHandler : ResponseEntityExceptionHandler ( ) {
 
@@ -87,53 +85,53 @@ class ControllerAdviceExceptionHandler : ResponseEntityExceptionHandler ( ) {
         )
     }
 
-    @ExceptionHandler(Exception::class)
+    @ExceptionHandler ( Exception::class, RuntimeException::class, DataAccessException::class, DataIntegrityViolationException::class )
     fun handleExceptions(ex: Exception, request: WebRequest): ResponseEntity<SingleErrorResponse> {
         logger.debug("Request  : $request")
         logger.debug("Exception: $ex")
-        val response = SingleErrorResponse(
-            LocalDateTime.now(),
-            "Internal Server Error",
-            500,
-            (request as ServletWebRequest).request.requestURI,
-            "An generic internal exception has occurred, the support team has been notified, please try again later."
+
+        val response = SingleErrorResponse ( LocalDateTime.now ( ),
+                                "Internal Server Error",
+                                 500,
+                                             ( request as ServletWebRequest ).request.requestURI,
+                                     "A generic internal exception has occurred, the support team has been notified, please try again later."
         )
         return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
-    @ExceptionHandler(RuntimeException::class)
-    fun handleRuntimeExceptions(ex: RuntimeException, request: WebRequest): ResponseEntity<SingleErrorResponse> {
-        logger.debug("Request  : $request")
-        logger.debug("Exception: $ex")
-        val response = SingleErrorResponse(
-            LocalDateTime.now(),
-            "Internal Server Error",
-            500,
-            (request as ServletWebRequest).request.requestURI,
-            "An generic internal runtime exception has occurred, the support team has been notified, please try again later."
-        )
-        return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-
-    /**
-     * EXPERIMENTAL
-     * @param ex
-     * @param request
-     * @return
-     */
-    @ExceptionHandler(DataAccessException::class, DataIntegrityViolationException::class)
-    fun handleDatabaseErrors(ex: Exception, request: WebRequest): ResponseEntity<SingleErrorResponse> {
-        logger.debug("Request  : $request")
-        logger.debug("Exception: $ex")
-        val response = SingleErrorResponse(
-            LocalDateTime.now(),
-            "Internal Server Error",
-            500,
-            (request as ServletWebRequest).request.requestURI,
-            "An internal database error has occurred, the support team has been notified, please try again later."
-        )
-        return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+//    @ExceptionHandler ( RuntimeException::class )
+//    fun handleRuntimeExceptions(ex: RuntimeException, request: WebRequest): ResponseEntity<SingleErrorResponse> {
+//        logger.debug("Request  : $request")
+//        logger.debug("Exception: $ex")
+//        val response = SingleErrorResponse(
+//            LocalDateTime.now(),
+//            "Internal Server Error",
+//            500,
+//            (request as ServletWebRequest).request.requestURI,
+//            "A generic internal runtime exception has occurred, the support team has been notified, please try again later."
+//        )
+//        return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
+//    }
+//
+//    /**
+//     * EXPERIMENTAL
+//     * @param ex
+//     * @param request
+//     * @return
+//     */
+//    @ExceptionHandler(DataAccessException::class, DataIntegrityViolationException::class)
+//    fun handleDatabaseErrors(ex: Exception, request: WebRequest): ResponseEntity<SingleErrorResponse> {
+//        logger.debug("Request  : $request")
+//        logger.debug("Exception: $ex")
+//        val response = SingleErrorResponse(
+//            LocalDateTime.now(),
+//            "Internal Server Error",
+//            500,
+//            (request as ServletWebRequest).request.requestURI,
+//            "An internal database error has occurred, the support team has been notified, please try again later."
+//        )
+//        return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
+//    }
 
     override fun handleMethodArgumentNotValid(
         ex: MethodArgumentNotValidException,
@@ -142,37 +140,35 @@ class ControllerAdviceExceptionHandler : ResponseEntityExceptionHandler ( ) {
         request: WebRequest
     ): ResponseEntity<Any> {
         val fieldErrorDetails = ex.bindingResult
-            .fieldErrors
-            .stream()
-            .map { error: FieldError ->
-                ErrorMessageDto(
-                    error.objectName,
-                    error.field,
-                    error.defaultMessage!!,
-                    ObjectUtils.nullSafeToString(error.rejectedValue)
-                )
-            }
-            .toList()
+                                  .fieldErrors
+//                                  .stream ( )
+                                  .map { error: FieldError -> ErrorMessageDto ( error.objectName,
+                                                                                error.field,
+                                                                                error.defaultMessage!!,
+                                                                                ObjectUtils.nullSafeToString ( error.rejectedValue ) )
+                                       }
+                                  .toList ( )
+
         val globalErrorDetails = ex.bindingResult
-            .globalErrors
-            .stream()
-            .map { error: ObjectError ->
-                ErrorMessageDto(
-                    error.objectName,
-                    error.defaultMessage!!
-                )
-            }
-            .toList()
-        val validationErrorDetails: MutableList<ErrorMessageDto> = ArrayList()
-        validationErrorDetails.addAll(fieldErrorDetails)
-        validationErrorDetails.addAll(globalErrorDetails)
-        val response = ErrorResponse(
-            LocalDateTime.now(),
-            status.name,
-            status.value(),
-            (request as ServletWebRequest).request.requestURI,
-            validationErrorDetails
-        )
-        return ResponseEntity(response, status)
+                                   .globalErrors
+//                                   .stream()
+                                   .map { error: ObjectError -> ErrorMessageDto ( error.objectName,
+                                                                                  error.defaultMessage!! )
+                                        }
+                                   .toList ( )
+
+        val validationErrorDetails: MutableList<ErrorMessageDto> = ArrayList ( )
+            validationErrorDetails.addAll ( fieldErrorDetails )
+            validationErrorDetails.addAll ( globalErrorDetails )
+
+        val response = ErrorResponse ( LocalDateTime.now ( ),
+                                       status.name,
+                                       status.value ( ),
+                                       ( request as ServletWebRequest ).request.requestURI,
+                                       validationErrorDetails )
+
+        return ResponseEntity ( response, status )
+
     }
+
 }
