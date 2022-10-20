@@ -3,9 +3,6 @@ package info.pmarquezh.junjo.model.sequence
 //   Standard Libraries Imports
 
 //   Third Party Libraries Imports
-import lombok.AllArgsConstructor
-import lombok.Builder
-import lombok.NoArgsConstructor
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
