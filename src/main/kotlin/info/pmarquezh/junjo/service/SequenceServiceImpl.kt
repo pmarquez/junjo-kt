@@ -52,7 +52,7 @@ import java.util.regex.Pattern
 @Slf4j
 @Service
 class SequenceServiceImpl @Autowired constructor ( private val sequenceRepository: SequenceRepository,
-                                                   private val sequenceMapper: SequenceMapper ) : SequenceService {
+                                                   private val sequenceMapper:     SequenceMapper ) : SequenceService {
 
     private val logger = KotlinLogging.logger { }
 
@@ -150,8 +150,9 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
     /*********************************************************************/
 
     private var sequence: SequenceRec? = null
-    private var template: String? = null
-    private var numericRollover = false
+    private var template: String?      = null
+    private var numericRollover        = false
+    private var alphaRollover          = false
 
     /**
      * Generates the next element in the sequence.
@@ -159,7 +160,7 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      * @param sequenceId
      * @return String The generated element from a sequence or null (if sequenceId is not valid/found).
      */
-    @Throws(NoSuchElementException::class)
+    @Throws ( NoSuchElementException::class )
     override fun getNextInSequence ( sequenceId: String? ): String? {
 
         sequence = retrieveSequence(sequenceId)
@@ -167,17 +168,19 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
         template = sequence!!.pattern
 
         //   YEAR PATTERN
-        if (sequence!!.priorityType == PRIORITY_NUMERIC) {
-            template = retrieveNumericPattern() //   NUMERIC PATTERN
-            template = retrieveAlphaPattern() //   ALPHA PATTERN
+        if ( sequence!!.priorityType == PRIORITY_NUMERIC ) {
+            template = retrieveNumericPattern ( ) //   NUMERIC PATTERN
+            template = retrieveAlphaPattern   ( ) //   ALPHA PATTERN
+            numericRollover = false
 
         } else {
-            template = retrieveAlphaPattern() //   ALPHA PATTERN
-            template = retrieveNumericPattern() //   NUMERIC PATTERN
+            template = retrieveAlphaPattern   ( ) //   ALPHA PATTERN
+            template = retrieveNumericPattern ( ) //   NUMERIC PATTERN
+            alphaRollover = false
         }
 
-        template = retrieveYearPattern() //   YEAR PATTERN
-        sequenceRepository.save(sequence!!)
+        template = retrieveYearPattern ( ) //   YEAR PATTERN
+        sequenceRepository.save ( sequence!! )
 
         return template
     }
@@ -190,9 +193,9 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      * @return List<String> The list of generated elements from a sequence or null (if sequenceId is not valid/found).
     </String> */
     @Throws(NoSuchElementException::class)
-    override fun getNextElementsInSequence(sequenceId: String?, quantity: Int): List<String?>? {
+    override fun getNextElementsInSequence ( sequenceId: String?, quantity: Int): List<String?>? {
 
-        sequence = retrieveSequence(sequenceId)
+        sequence = retrieveSequence ( sequenceId )
 
         val elements: MutableList<String?> = ArrayList ( )
 
@@ -209,14 +212,19 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      *
      * @return
      */
-    private fun retrieveNumericPattern(): String? {
-        val numericPattern = Pattern.compile(numericPatternString)
-        val numericMatcher = numericPattern.matcher(template)
-        while (numericMatcher.find()) {
-            val numericGroup = numericMatcher.group()
-            template = template!!.replace(numericGroup, processNumericGroup(numericGroup, true))
+    private fun retrieveNumericPattern ( ): String? {
+
+        val numericPattern = Pattern.compile ( numericPatternString )
+
+        val numericMatcher = numericPattern.matcher ( template )
+
+        while ( numericMatcher.find ( ) ) {
+            val numericGroup = numericMatcher.group ( )
+            template = template!!.replace ( numericGroup, processNumericGroup ( numericGroup, true ) )
         }
+
         return template
+
     }
 
     /**
@@ -224,22 +232,28 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      * @param numericGroup
      * @return nextNumberStr
      */
-    private fun processNumericGroup(numericGroup: String, increment: Boolean): String {
+    private fun processNumericGroup ( numericGroup: String, increment: Boolean ): String {
 
-        logger.info("numericGroup: $numericGroup")
+        logger.debug ( "- numericGroup                 : $numericGroup" )
 
         val maxDigitsAllowed = numericGroup.length - 2
-        var nextNumber = if (increment) sequence!!.currentNumericSequence + 1 else sequence!!.currentNumericSequence
+        var nextNumber = if ( increment ) sequence!!.currentNumericSequence + 1 else sequence!!.currentNumericSequence
 
-        if (getDigitsCount(nextNumber) > maxDigitsAllowed) {
-            nextNumber = 1
+        if ( getDigitsCount ( nextNumber ) > maxDigitsAllowed ) {
+            nextNumber = 0
             numericRollover = true
+
         }
 
-        var nextNumberStr = Integer.toString(nextNumber)
-            nextNumberStr = StringUtils.leftPad(nextNumberStr, maxDigitsAllowed, defaultNumericPadChar)
+        logger.info ( "numericRollover                 : $numericRollover" )
+
+        var nextNumberStr = Integer.toString ( nextNumber )
+            nextNumberStr = StringUtils.leftPad ( nextNumberStr, maxDigitsAllowed, defaultNumericPadChar )
 
         sequence!!.currentNumericSequence = nextNumber
+
+        logger.debug ( "nextNumber                     : $nextNumber" )
+        logger.debug ( "sequence.currentNumericSequence: $sequence!!.currentNumericSequence" )
 
         return nextNumberStr
 
