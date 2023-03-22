@@ -1,6 +1,5 @@
 package info.pmarquezh.junjo.config
 
-import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
@@ -14,10 +13,6 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor
 import org.springframework.web.servlet.i18n.SessionLocaleResolver
 import java.util.*
 
-//   Standard Libraries Imports
-//   Third Party Libraries Imports
-//   ns Framework Imports
-//   Domain Imports
 /**
  * I18nConfig.kt<br></br><br></br>
  * Creation Date 2022-08-18 12:02<br></br><br></br>
@@ -43,9 +38,8 @@ import java.util.*
  * @author pmarquezh
  * @version 1.0 - 2022-08-18 12:02
  */
-@Slf4j
 @Configuration
-class I18nConfig : WebMvcConfigurer {
+class I18nConfig: WebMvcConfigurer {
     @Value("\${info.pmarquezh.junjo.defaultLocaleLanguage}")
     private var lang: String? = "es"
 

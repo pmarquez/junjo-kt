@@ -3,10 +3,8 @@ package info.pmarquezh.junjo.web.controller
 
 //   Standard Libraries Imports
 import javax.validation.Valid
-import javax.validation.constraints.Min
 
 //   Third Party Libraries Imports
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -50,16 +48,9 @@ import info.pmarquezh.junjo.service.SequenceService
  */
 @RestController
 @RequestMapping ( "/junjoAPI/1.0/sequences" )
-class SequenceRestController {
+class SequenceRestController ( private val sequenceService: SequenceService ) {
 
     private val logger = KotlinLogging.logger { }
-
-    private var sequenceService: SequenceService? = null
-
-    @Autowired
-    fun setSequenceRestService ( sequenceService: SequenceService? ) {
-        this.sequenceService = sequenceService
-    }
 
     /**
      * Persists a new Sequence [C].
@@ -68,7 +59,7 @@ class SequenceRestController {
     @PostMapping ( path = [""] )
     fun persistSequence ( @Valid @RequestBody sequenceDTO: SequenceDTO ): ResponseEntity<Void> {
 
-        val newSequenceId = sequenceService!!.persistSequence ( sequenceDTO )
+        val newSequenceId = sequenceService.persistSequence ( sequenceDTO )
 
         val headers = HttpHeaders ( )
             headers.add ( "Location", newSequenceId )
@@ -83,7 +74,7 @@ class SequenceRestController {
      */
     @GetMapping ( path = [""] )
     fun retrieveSequences ( ): ResponseEntity<List<SequenceRec?>?> {
-        val sequences = sequenceService!!.retrieveSequences ( )
+        val sequences = sequenceService.retrieveSequences ( )
         return ResponseEntity ( sequences, HttpStatus.OK )
     }
 
@@ -93,7 +84,7 @@ class SequenceRestController {
      */
     @GetMapping( path = ["/{sequenceId}"])
     fun retrieveSequence(@PathVariable("sequenceId") sequenceId: String?): ResponseEntity<SequenceRec> {
-        val sequence = sequenceService!!.retrieveSequence(sequenceId)
+        val sequence = sequenceService.retrieveSequence(sequenceId)
         return ResponseEntity(sequence, HttpStatus.OK)
     }
 
@@ -103,7 +94,7 @@ class SequenceRestController {
      */
     @PutMapping ( path = ["/{sequenceId}" ] )
     fun updateSequence ( @PathVariable("sequenceId") sequenceId: String?, @RequestBody sequenceDTO: SequenceDTO? ): ResponseEntity<Void> {
-        sequenceService!!.updateSequence(sequenceId, sequenceDTO)
+        sequenceService.updateSequence(sequenceId, sequenceDTO)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
@@ -113,7 +104,7 @@ class SequenceRestController {
      */
     @DeleteMapping( path = ["/{sequenceId}"])
     fun deleteSequence(@PathVariable("sequenceId") sequenceId: String?): ResponseEntity<Void> {
-        sequenceService!!.deleteSequence(sequenceId)
+        sequenceService.deleteSequence(sequenceId)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
@@ -123,7 +114,7 @@ class SequenceRestController {
      */
     @GetMapping( path = ["/{sequenceId}/generate"])
     fun generateNextElementInSequence ( @PathVariable ( "sequenceId" ) sequenceId: String? ): ResponseEntity<String> {
-        val generatedElement = sequenceService!!.getNextInSequence(sequenceId)
+        val generatedElement = sequenceService.getNextInSequence(sequenceId)
         return ResponseEntity(generatedElement, HttpStatus.OK)
     }
 
@@ -138,7 +129,7 @@ class SequenceRestController {
         //   JACK SPARROW WAS HERE BIG TIME!!! @PathVariable validations NOT working. OPEN A TICKET WITH THIS ISSUE RIGHT AWAY
         if ( quantity < 0 ) { return ResponseEntity ( HttpStatus.BAD_REQUEST ) }
 
-        val generatedElements = sequenceService!!.getNextElementsInSequence ( sequenceId, quantity )
+        val generatedElements = sequenceService.getNextElementsInSequence ( sequenceId, quantity )
 
         return ResponseEntity ( generatedElements, HttpStatus.OK )
 
