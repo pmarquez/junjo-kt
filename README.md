@@ -121,6 +121,11 @@ docker pull pmarquezh/junjo
 
 ## Release Notes
 
+### v0.9.11-SNAPSHOT
+```
+* A bit of cleanup and db schema added to project
+```
+
 ### v0.9.10-SNAPSHOT
 
 * Numeric rollover fixed.

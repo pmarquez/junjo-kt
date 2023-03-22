@@ -1,0 +1,109 @@
+[{
+  "_id": "c0006e69-27b8-4ad8-8b83-7e0699a41203",
+  "sequenceName": "License Plates",
+  "currentNumericSequence": 1,
+  "currentAlphaSequence": 8814,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec",
+  "pattern": "{NNNN}-{AAA}"
+},{
+  "_id": "4fda2117-0fcc-4b94-957d-70a97b316a8c",
+  "sequenceName": "da odder sequence",
+  "pattern": "{NNNN}-{AAA}",
+  "currentNumericSequence": 525,
+  "currentAlphaSequence": 958,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "501c8596-ae86-447e-8c95-2ffab54e7206",
+  "sequenceName": "daSequence",
+  "pattern": "SKU-COR-ES-{AAA}-{NNNN}-{YYYY}-SUC-01",
+  "currentNumericSequence": 27,
+  "currentAlphaSequence": 28,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "bd05e6f9-4a82-4e01-ba99-fd42df5312f0",
+  "sequenceName": "Sequence 03",
+  "currentNumericSequence": 1,
+  "currentAlphaSequence": 16300,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec",
+  "pattern": "{NNN}-{AAA}-VEN"
+},{
+  "_id": "19f5ae11-08cc-4fc4-ad5b-87aef200b2f2",
+  "sequenceName": "La Coruña - Parrote",
+  "pattern": "COR-{YYYY}-{NNNNNN}",
+  "currentNumericSequence": 2871,
+  "currentAlphaSequence": 0,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "a4332f0d-fc85-449d-babd-9d9d5735b3ac",
+  "sequenceName": "Tenerife - La Laguna",
+  "pattern": "TFE-{YY}-{NNNNNN}",
+  "currentNumericSequence": 251,
+  "currentAlphaSequence": 0,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "ce766b13-a26f-4fc8-a81e-119ed75c95f5",
+  "sequenceName": "Barcelona - Terrassa",
+  "pattern": "TSA-{YYYY}-{NNNNNN}",
+  "currentNumericSequence": 0,
+  "currentAlphaSequence": 0,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "f4591d9d-f22a-4cdb-83f1-4cc2cd81ff41",
+  "sequenceName": "SKUs 001",
+  "pattern": "{YYYY}-{AAAA}-{NNNNNN}",
+  "currentNumericSequence": 1199,
+  "currentAlphaSequence": 0,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "0f56280a-393f-4a0a-b6e3-f1cde95a92a8",
+  "sequenceName": "SKUs 101",
+  "pattern": "{YYYY}-{AA}-{NNNN}",
+  "currentNumericSequence": 0,
+  "currentAlphaSequence": 0,
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "47cef3f2-ea74-471b-861e-92f4d6239f89",
+  "sequenceName": "SKUs 102",
+  "pattern": "{YYYY}-{AA}-{NNN}",
+  "currentNumericSequence": 26,
+  "currentAlphaSequence": 126,
+  "currentAlphaRepresentation": "AA",
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "897ad941-4771-4626-86af-2f661de20414",
+  "sequenceName": "SKUs 102",
+  "pattern": "{YYYY}-{AA}-{NNN}",
+  "currentNumericSequence": 25,
+  "currentAlphaSequence": 149,
+  "currentAlphaRepresentation": "AA",
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "ab165f00-a560-4e5b-97be-9e8cd35c2b48",
+  "sequenceName": "SKUs 102",
+  "pattern": "{YYYY}-{AA}-{NNN}",
+  "currentNumericSequence": 75,
+  "currentAlphaSequence": 199,
+  "currentAlphaRepresentation": "AA",
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+},{
+  "_id": "31fa01f7-f73c-4b8c-91e9-a2b8242b021e",
+  "sequenceName": "SKUs 103",
+  "pattern": "{YYYY}-{AA}-{NNN}",
+  "currentNumericSequence": 100,
+  "currentAlphaSequence": 149,
+  "currentAlphaRepresentation": "AA",
+  "priorityType": "numeric",
+  "_class": "info.pmarquezh.junjo.model.sequence.SequenceRec"
+}]
