@@ -12,17 +12,17 @@
 
 <!-- Badges -->
 <p>
-  <a href="https://github.com/pmarquez/junjo/graphs/contributors">
+  <a href="https://github.com/pmarquez/junjo-kt/graphs/contributors">
     <img src="https://img.shields.io/github/contributors/pmarquez/junjo" alt="contributors" />
   </a>
   <a href="">
-    <img src="https://img.shields.io/github/last-commit/pmarquez/junjo" alt="last update" />
+    <img src="https://img.shields.io/github/last-commit/pmarquez/junjo-kt" alt="last update" />
   </a>
   <a href="https://github.com/pmarquez/junjo/stargazers">
-    <img src="https://img.shields.io/github/stars/pmarquez/junjo" alt="stars" />
+    <img src="https://img.shields.io/github/stars/pmarquez/junjo-kt" alt="stars" />
   </a>
   <a href="https://github.com/pmarquez/junjo/issues/">
-    <img src="https://img.shields.io/github/issues/pmarquez/junjo" alt="open issues" />
+    <img src="https://img.shields.io/github/issues/pmarquez/junjo-kt" alt="open issues" />
   </a>
   <a href="https://github.com/pmarquez/junjo/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/pmarquez/junjo.svg" alt="license" />
@@ -30,13 +30,13 @@
 </p>
 
 <!-- h4>
-    <a href="https://github.com/pmarquez/junjo/">View Demo</a>
+    <a href="https://github.com/pmarquez/junjo-kt/">View Demo</a>
   <span> · </span>
-    <a href="https://github.com/pmarquez/junjo">Documentation</a>
+    <a href="https://github.com/pmarquez/junjo-kt">Documentation</a>
   <span> · </span>
-    <a href="https://github.com/pmarquez/junjo/issues/">Report Bug</a>
+    <a href="https://github.com/pmarquez/junjo-kt/issues/">Report Bug</a>
   <span> · </span>
-    <a href="https://github.com/pmarquez/junjo/issues/">Request Feature</a>
+    <a href="https://github.com/pmarquez/junjo-kt/issues/">Request Feature</a>
   </h4 -->
 </div>
 
@@ -120,6 +120,11 @@ docker pull pmarquezh/junjo
 
 
 ## Release Notes
+
+### v0.9.12-SNAPSHOT
+```
+* Reviewed code in SequenceRestController, many new things learned since last time, code improvements, many more to come.
+```
 
 ### v0.9.11.1-SNAPSHOT
 ```
