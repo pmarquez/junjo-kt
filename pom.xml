@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>info.pmarquezh</groupId>
 	<artifactId>junjo-kt</artifactId>
-	<version>0.9.11-SNAPSHOT</version>
+	<version>0.9.12-SNAPSHOT</version>
 	<name>Junjo Kotlin</name>
 	<description>Port of Junjo to KOTLIN</description>
 	<properties>
