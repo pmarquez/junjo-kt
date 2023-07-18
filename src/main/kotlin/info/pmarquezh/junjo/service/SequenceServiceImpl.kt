@@ -1,86 +1,43 @@
 package info.pmarquezh.junjo.service
 
-//   Standard Libraries Imports
-
-//   Third Party Libraries Imports
-
-//   ns Framework Imports
-
-//   Domain Imports
-
 import info.pmarquezh.junjo.mapper.SequenceMapper
 import info.pmarquezh.junjo.model.sequence.SequenceDTO
 import info.pmarquezh.junjo.model.sequence.SequenceRec
 import info.pmarquezh.junjo.repository.SequenceRepository
 import lombok.extern.slf4j.Slf4j
-import mu.KotlinLogging
 import org.apache.commons.lang3.StringUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.util.*
 import java.util.function.Consumer
+import java.util.logging.Logger
 import java.util.regex.Pattern
 
-
-/**
- * SequenceServiceImpl.kt<br></br><br></br>
- * Creation Date 2022-02-08 16:58<br></br><br></br>
- * **DESCRIPTION:**<br></br><br></br>
- *
- *
- *
- * <PRE>
- * <table width="90%" border="1" cellpadding="3" cellspacing="2">
- * <tr><th colspan="2">   History   </th></tr>
- *
- * <tr>
- * <td width="20%">Version 1.0<br></br>
- * Version Date: 2022-02-08 16:58<br></br>
- *
- * @author pmarquezh </td>
- * <td width="80%">
- *
- *Creation</td>
- * </tr>
- * </table>
- * </PRE>
- * @author pmarquezh
- * @version 1.0 - 2022-02-08 16:58
- */
 @Slf4j
 @Service
-class SequenceServiceImpl @Autowired constructor ( private val sequenceRepository: SequenceRepository,
-                                                   private val sequenceMapper:     SequenceMapper ) : SequenceService {
+class SequenceServiceImpl ( private val sequenceRepository: SequenceRepository,
+                            private val sequenceMapper:     SequenceMapper ) : SequenceService {
 
-    private val logger = KotlinLogging.logger { }
+    val logger: Logger = Logger.getLogger(SequenceServiceImpl::class.java.name)
 
     @Value("\${info.pmarquezh.junjo.numericPattern}")
-    private val numericPatternString: String? = null
+    private val numericPatternString: String = ""
 
     @Value("\${info.pmarquezh.junjo.alphaPattern}")
-    private val alphaPatternString: String? = null
+    private val alphaPatternString: String = ""
 
     @Value("\${info.pmarquezh.junjo.yearPattern}")
-    private val yearPatternString: String? = null
+    private val yearPatternString: String = ""
 
     @Value("\${info.pmarquezh.junjo.defaultNumericPadChar}")
-    private val defaultNumericPadChar: String? = null
+    private val defaultNumericPadChar: String = ""
 
-    /**
-     * Persists a new Sequence [C].
-     *
-     * @param sequenceDTO
-     * @return
-     */
-    override fun persistSequence ( sequenceDTO: SequenceDTO? ): String? {
-        var seq = sequenceMapper.convertDtoToEntity ( sequenceDTO )
+    override fun persistSequence ( sequenceDTO: SequenceDTO ): String {
+        val seq = sequenceMapper.convertDtoToEntity ( sequenceDTO )
             seq.id = UUID.randomUUID().toString()
-
         val sr = sequenceRepository.save(seq)
-
-        return sr.id
+        return sr.id!!
     }
 
     /**
@@ -90,7 +47,7 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      */
     override fun retrieveSequences ( ): List<SequenceRec?>? {
 
-        var sequences: MutableList<SequenceRec?> = ArrayList ( )
+        val sequences: MutableList<SequenceRec?> = ArrayList ( )
 
         val iSequences = sequenceRepository.findAll ( )
         iSequences.forEach ( Consumer { element: SequenceRec? -> sequences.add ( element )  } )
@@ -234,7 +191,7 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
      */
     private fun processNumericGroup ( numericGroup: String, increment: Boolean ): String {
 
-        logger.debug ( "- numericGroup                 : $numericGroup" )
+        logger.info ( "- numericGroup                 : $numericGroup" )
 
         val maxDigitsAllowed = numericGroup.length - 2
         var nextNumber = if ( increment ) sequence!!.currentNumericSequence + 1 else sequence!!.currentNumericSequence
@@ -252,8 +209,8 @@ class SequenceServiceImpl @Autowired constructor ( private val sequenceRepositor
 
         sequence!!.currentNumericSequence = nextNumber
 
-        logger.debug ( "nextNumber                     : $nextNumber" )
-        logger.debug ( "sequence.currentNumericSequence: $sequence!!.currentNumericSequence" )
+        logger.info ( "nextNumber                     : $nextNumber" )
+        logger.info ( "sequence.currentNumericSequence: $sequence!!.currentNumericSequence" )
 
         return nextNumberStr
 

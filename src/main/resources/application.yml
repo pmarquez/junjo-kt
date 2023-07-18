@@ -1,0 +1,25 @@
+application:
+  environment: "DEV"
+server:
+  port: 8100
+
+spring:
+  data:
+    mongodb:
+      database: junjo
+      uri: mongodb://127.0.0.1:27017
+
+logging:
+  level:
+    org.springframework.data: debug
+    info.pmarquezh.junjo: debug
+
+info:
+  pmarquezh:
+    junjo:
+      numericPattern: "\\{[N]+\\}"
+      alphaPattern: "\\{[A]+\\}"
+      yearPattern: "\\{[Y]+\\}"
+      defaultNumericPadChar: "0"
+      defaultLocaleLanguage: "es"
+      defaultLocaleCountry: "ES"
