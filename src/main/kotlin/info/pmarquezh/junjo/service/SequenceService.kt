@@ -3,42 +3,9 @@ package info.pmarquezh.junjo.service
 import info.pmarquezh.junjo.model.sequence.SequenceDTO
 import info.pmarquezh.junjo.model.sequence.SequenceRec
 
-//   Standard Libraries Imports
-//   Third Party Libraries Imports
-//   FENIX Framework Imports
-//   Domain Imports
-/**
- * SequenceService.kt<br></br><br></br>
- * Creation Date 2022-02-08 16:57<br></br><br></br>
- * **DESCRIPTION:**<br></br><br></br>
- *
- *
- *
- * <PRE>
- * <table width="90%" border="1" cellpadding="3" cellspacing="2">
- * <tr><th colspan="2">   History   </th></tr>
- *
- * <tr>
- * <td width="20%">Version 1.0<br></br>
- * Version Date: 2022-02-08 16:57<br></br>
- *
- * @author pmarquezh </td>
- * <td width="80%">
- *
- *Creation</td>
-</tr> *
-</table> *
-</PRE> *
- * @author pmarquezh
- * @version 1.0 - 2022-02-08 16:57
- */
 interface SequenceService {
-    /**
-     * Persists a new Sequence [C].
-     * @param sequenceDTO
-     * @return
-     */
-    fun persistSequence(sequenceDTO: SequenceDTO?): String?
+
+    fun persistSequence(sequenceDTO: SequenceDTO): String
 
     /**
      * Retrieves all sequences in storage [R]

@@ -4,8 +4,6 @@ import info.pmarquezh.junjo.model.sequence.SequenceRec
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
-//   Third party Imports
-//   Domain Imports
 /**
  * SequenceRepository.kt<br></br><br></br>
  * Creation Date 2022-02-08 17:11<br></br><br></br>

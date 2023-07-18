@@ -121,6 +121,12 @@ docker pull pmarquezh/junjo
 
 ## Release Notes
 
+### v0.9.13-SNAPSHOT
+```
+* SequenceServiceImpl cleanup.
+* MySQL repository - First Blood
+```
+
 ### v0.9.12-SNAPSHOT
 ```
 * Reviewed code in SequenceRestController, many new things learned since last time, code improvements, many more to come.
